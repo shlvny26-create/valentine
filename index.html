@@ -1,142 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Valentine 💖</title>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
 
 <style>
 body{
-background:linear-gradient(to bottom,#8b0000,#ff4d4d);
-color:white;
-text-align:center;
-font-family:Arial, sans-serif;
-height:100vh;
-margin:0;
-overflow:hidden;
-padding:20px;
+  background: linear-gradient(#b30000, #ff4d6d);
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding-top: 100px;
 }
 
 h1{
-margin-top:80px;
-font-size:40px;
+  margin-bottom: 40px;
 }
 
 button{
-font-size:22px;
-padding:15px 40px;
-border:none;
-border-radius:30px;
-cursor:pointer;
-margin:10px;
+  font-size: 22px;
+  padding: 15px 35px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  margin: 10px;
 }
 
-#yes{
-background:white;
-color:#8b0000;
-font-weight:bold;
+.yes{
+  background: #2ecc71;
+  color: white;
 }
 
-#no{
-background:#ffd6d6;
-color:#8b0000;
-position:absolute;
+.no{
+  background: #ff3b3b;
+  color: white;
+  position: absolute;
 }
 
-.section{display:none;}
+#thankYou, #openBtn, #letterBox{
+  display: none;
+}
+
+#openBtn{
+  background: white;
+  color: #b30000;
+  font-size: 24px;
+}
 
 #letterBox{
-max-width:750px;
-margin:auto;
-font-size:22px;
-line-height:1.7;
-background:rgba(255,255,255,0.15);
-padding:30px;
-border-radius:20px;
-text-align:left;
-white-space:pre-line;
+  background: white;
+  color: #b30000;
+  width: 85%;
+  max-height: 60vh;
+  margin: 40px auto;
+  padding: 25px;
+  border-radius: 20px;
+  overflow-y: auto;
+  font-size: 18px;
+  text-align: left;
+  white-space: pre-line;
 }
-
-/* hidden music player */
-#music{
-width:1px;
-height:1px;
-opacity:0;
-}
-
 </style>
 </head>
 
 <body>
 
 <!-- STEP 1 -->
-<div id="step1">
-<h1>Ritu Agarwal, will you be my Valentine? ❤️</h1>
-<button id="yes" onclick="go2()">YES 💖</button>
-<button id="no" onmouseover="run(this)" ontouchstart="run(this)">NO 😜</button>
-</div>
+<h1 id="q1">Ritu, will you be my Valentine? 💘</h1>
+<button class="yes" onclick="goToMarry()">YES 💖</button>
+<button class="no" onmouseover="moveNo(this)">NO 😜</button>
 
 <!-- STEP 2 -->
-<div id="step2" class="section">
-<h1>Will you marry me someday? 💍❤️</h1>
-<button onclick="go3()">YES 😍</button>
-<button id="no2" onmouseover="run(this)" ontouchstart="run(this)">NO 🙈</button>
-</div>
+<h1 id="q2" style="display:none;">Will you marry me, my love? 💍</h1>
+<button id="yes2" class="yes" style="display:none;" onclick="showThankYou()">YES 💍</button>
+<button id="no2" class="no" style="display:none;" onmouseover="moveNo(this)">NO 😜</button>
 
 <!-- STEP 3 -->
-<div id="step3" class="section">
-<h1>My Love Letter To You 💌</h1>
-<div id="letterBox"></div>
-</div>
+<h1 id="thankYou">Thank you for choosing me ❤️</h1>
+<button id="openBtn" onclick="showLetter()">💌 Open to reveal letter</button>
 
-<!-- BACKGROUND MUSIC -->
-<iframe id="music"
-src="https://www.youtube.com/embed/7z8qwMTJQao?autoplay=1&loop=1&playlist=7z8qwMTJQao"
-allow="autoplay">
-</iframe>
+<!-- LETTER -->
+<div id="letterBox">
+THANK YOU FOR CHOOSING ME.
 
-<script>
-const letter = `THANK YOU FOR CHOOSING ME.
+My love, meeting you was unexpected in the most beautiful way. I found you when I was not even looking, when I had quietly given up on love, and then you arrived and changed everything. You did not simply enter my life, you elevated it.
 
-My love, meeting you was unexpected in the most beautiful way. I found you when I was not even looking, when I had quietly given up on love, and then you arrived and changed everything. You did not simply enter my life, you elevated it. Loving you has made me calmer, kinder, and better, and I truly admire the person I have become because of you.
+Loving you has made me calmer, kinder, and better.
 
-You are extraordinary in every sense. Incredibly talented, breathtakingly beautiful, undeniably hot and effortlessly sexy. And your voice.. it deserves its own audience. I could listen to you sing for hours and still ask for more. I could look at that beautiful face for a lifetime and never once take it for granted. You inspire me, steady me, and make my heart feel at home.
+You are extraordinary in every sense. Incredibly talented, breathtakingly beautiful, undeniably hot and effortlessly sexy. And your voice… it deserves its own audience.
 
-And us? We just work. The laughter, the comfort, the chaos, the calm — it all feels right. You are my favourite person, my safe place, and the best decision I never planned on making.
+You are my favourite person, my safe place, and my home.
 
-I cannot wait to spend the rest of my life with you laughing, growing, loving, annoying each other, and choosing each other every single day.
+Forever sounds incredible. Especially now that it is us. 
 
-Forever sounds incredible. Especially now that it is us. ❤️💍
+I LOVE YOU! ❤️
 
-So yes, this is me wholeheartedly signing up for a lifetime of your brilliant mind, your beautiful chaos, gently judging my completely unnecessary purchases, travelling the world hand in hand, and just so you know your lifetime supply of lipsticks is officially on me. Always.
 
 Love,  
-V`;
+V
+</div>
 
-let i = 0;
-
-function typeLetter(){
-if(i < letter.length){
-document.getElementById("letterBox").innerHTML += letter.charAt(i);
-i++;
-setTimeout(typeLetter,25);
-}
-}
-
-function run(btn){
-let x=Math.random()*(window.innerWidth-140);
-let y=Math.random()*(window.innerHeight-80);
-btn.style.left=x+"px";
-btn.style.top=y+"px";
+<script>
+function moveNo(btn){
+  let x = Math.random() * (window.innerWidth - 120);
+  let y = Math.random() * (window.innerHeight - 120);
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
 }
 
-function go2(){
-step1.style.display="none";
-step2.style.display="block";
+function goToMarry(){
+  document.getElementById("q1").style.display = "none";
+  document.querySelector(".yes").style.display = "none";
+  document.querySelector(".no").style.display = "none";
+
+  document.getElementById("q2").style.display = "block";
+  document.getElementById("yes2").style.display = "inline-block";
+  document.getElementById("no2").style.display = "inline-block";
 }
 
-function go3(){
-step2.style.display="none";
-step3.style.display="block";
-typeLetter();
+function showThankYou(){
+  document.getElementById("q2").style.display = "none";
+  document.getElementById("yes2").style.display = "none";
+  document.getElementById("no2").style.display = "none";
+
+  document.getElementById("thankYou").style.display = "block";
+  document.getElementById("openBtn").style.display = "inline-block";
+}
+
+function showLetter(){
+  document.getElementById("openBtn").style.display = "none";
+  document.getElementById("letterBox").style.display = "block";
 }
 </script>
 
