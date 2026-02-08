@@ -2,86 +2,182 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You ❤️</title>
 
 <style>
 body{
-  background: linear-gradient(#b30000, #ff4d6d);
-  color: white;
+  margin:0;
   font-family: Arial, sans-serif;
-  text-align: center;
-  padding-top: 100px;
+  background: linear-gradient(#b3002d, #ffccd5);
+  color:white;
+  text-align:center;
+  overflow-x:hidden;
 }
 
-h1{
-  margin-bottom: 40px;
+.section{
+  display:none;
+  padding:60px 20px;
+  min-height:100vh;
 }
+
+.active{ display:block; }
 
 button{
-  font-size: 22px;
-  padding: 15px 35px;
-  border: none;
-  border-radius: 14px;
-  cursor: pointer;
-  margin: 10px;
+  font-size:20px;
+  padding:14px 28px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  margin:10px;
 }
 
-.yes{
-  background: #2ecc71;
-  color: white;
-}
-
+.yes{ background:#2ecc71; color:white; }
 .no{
-  background: #ff3b3b;
-  color: white;
-  position: absolute;
-}
-
-#thankYou, #openBtn, #letterBox{
-  display: none;
-}
-
-#openBtn{
-  background: white;
-  color: #b30000;
-  font-size: 24px;
+  background:#e74c3c;
+  color:white;
+  position:absolute;
 }
 
 #letterBox{
-  background: white;
-  color: #b30000;
-  width: 85%;
-  max-height: 60vh;
-  margin: 40px auto;
-  padding: 25px;
-  border-radius: 20px;
-  overflow-y: auto;
-  font-size: 18px;
-  text-align: left;
-  white-space: pre-line;
+  max-width:720px;
+  margin:0 auto;
+  background:rgba(255,255,255,0.18);
+  padding:30px;
+  border-radius:16px;
+  text-align:left;
+  max-height:65vh;
+  overflow-y:auto;
+  display:none;
+  line-height:1.6;
+  white-space:pre-wrap;
+}
+
+#imageReveal{
+  display:none;
+}
+
+#imageReveal img{
+  max-width:90%;
+  border-radius:20px;
+  animation: fadeIn 3s;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+.balloon{
+  width:80px;
+  height:100px;
+  background:#ff4d6d;
+  border-radius:50%;
+  position:absolute;
+  bottom:-120px;
+  animation: float 10s linear infinite;
+  cursor:pointer;
+}
+
+@keyframes float{
+  from{ transform:translateY(0); }
+  to{ transform:translateY(-120vh); }
+}
+
+#reasonBox{
+  font-size:22px;
+  margin-top:30px;
+}
+
+/* FINAL POPUP */
+#finalPopup{
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+
+#finalPopup h1{
+  color:#ffccd5;
+  font-size:36px;
+  max-width:90%;
+  animation: fadeIn 3s;
 }
 </style>
 </head>
 
 <body>
 
-<!-- STEP 1 -->
-<h1 id="q1">Ritu, will you be my Valentine? 💘</h1>
-<button class="yes" onclick="goToMarry()">YES 💖</button>
-<button class="no" onmouseover="moveNo(this)">NO 😜</button>
+<div id="finalPopup">
+  <h1>I LOVE YOU, RITU AGARWAL,<br>MY ROCKSTAR ❤️</h1>
+</div>
 
-<!-- STEP 2 -->
-<h1 id="q2" style="display:none;">Will you marry me, my love? 💍</h1>
-<button id="yes2" class="yes" style="display:none;" onclick="showThankYou()">YES 💍</button>
-<button id="no2" class="no" style="display:none;" onmouseover="moveNo(this)">NO 😜</button>
+<!-- SECTION 1 -->
+<div id="s1" class="section active">
+  <h1>Ritu, will you be my Valentine? ❤️</h1>
+  <button class="yes" onclick="goTo('s2')">YES</button>
+  <button class="no" id="no1">NO</button>
+</div>
 
-<!-- STEP 3 -->
-<h1 id="thankYou">Thank you for choosing me ❤️</h1>
-<button id="openBtn" onclick="showLetter()">💌 Open to reveal letter</button>
+<!-- SECTION 2 -->
+<div id="s2" class="section">
+  <h1>Will you marry me, my love? 💍</h1>
+  <button class="yes" onclick="goTo('s3')">YES</button>
+  <button class="no" id="no2">NO</button>
+</div>
 
-<!-- LETTER -->
-<div id="letterBox">
-THANK YOU FOR CHOOSING ME.
+<!-- SECTION 3 -->
+<div id="s3" class="section">
+  <h2>Thank you for always choosing us ❤️</h2>
+  <button class="yes" onclick="openLetter()">💌 Open to reveal letter</button>
+</div>
+
+<!-- SECTION 4 -->
+<div id="s4" class="section">
+  <div id="letterBox"></div>
+  <br>
+  <button class="yes" onclick="showImage()">Tap to reveal my favourite view</button>
+</div>
+
+<!-- SECTION 5 -->
+<div id="s5" class="section">
+  <div id="imageReveal">
+    <img src="her.jpg">
+  </div>
+  <br>
+  <button class="yes" onclick="startBalloons()">Do you want to know why? 🎈</button>
+</div>
+
+<!-- SECTION 6 -->
+<div id="s6" class="section">
+  <h2>Tap the balloons ❤️</h2>
+  <div id="reasonBox"></div>
+</div>
+
+<iframe id="music" width="0" height="0" allow="autoplay"></iframe>
+
+<script>
+function goTo(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function moveNo(btn){
+  btn.style.left = Math.random()*70 + "vw";
+  btn.style.top = Math.random()*70 + "vh";
+}
+
+['no1','no2'].forEach(id=>{
+  let b=document.getElementById(id);
+  b.onmouseover=()=>moveNo(b);
+  b.ontouchstart=()=>moveNo(b);
+});
+
+const letterText = `THANK YOU FOR CHOOSING ME.
 
 My love, meeting you was unexpected in the most beautiful way. I found you when I was not even looking, when I had quietly given up on love, and then you arrived and changed everything. You did not simply enter my life, you elevated it.
 
@@ -91,45 +187,67 @@ You are extraordinary in every sense. Incredibly talented, breathtakingly beauti
 
 You are my favourite person, my safe place, and my home.
 
-Forever sounds incredible. Especially now that it is us. 
+Forever sounds incredible. Especially now that it is us.
 
 I LOVE YOU! ❤️
 
+Love,
+V`;
 
-Love,  
-V
-</div>
+function openLetter(){
+  goTo('s4');
+  document.getElementById('music').src =
+  "https://www.youtube.com/embed/7z8qwMTJQao?autoplay=1";
 
-<script>
-function moveNo(btn){
-  let x = Math.random() * (window.innerWidth - 120);
-  let y = Math.random() * (window.innerHeight - 120);
-  btn.style.left = x + "px";
-  btn.style.top = y + "px";
+  let box=document.getElementById('letterBox');
+  box.style.display="block";
+  box.innerText="";
+
+  let i=0;
+  let interval=setInterval(()=>{
+    box.innerText += letterText.charAt(i);
+    box.scrollTop = box.scrollHeight;
+    i++;
+    if(i>=letterText.length) clearInterval(interval);
+  },35);
 }
 
-function goToMarry(){
-  document.getElementById("q1").style.display = "none";
-  document.querySelector(".yes").style.display = "none";
-  document.querySelector(".no").style.display = "none";
-
-  document.getElementById("q2").style.display = "block";
-  document.getElementById("yes2").style.display = "inline-block";
-  document.getElementById("no2").style.display = "inline-block";
+function showImage(){
+  goTo('s5');
+  document.getElementById('imageReveal').style.display="block";
 }
 
-function showThankYou(){
-  document.getElementById("q2").style.display = "none";
-  document.getElementById("yes2").style.display = "none";
-  document.getElementById("no2").style.display = "none";
+const reasons=[
+"Because you feel like home",
+"Because you believe in me",
+"Because your smile fixes everything",
+"Because life feels lighter with you",
+"Because loving you feels effortless",
+"Because even silence with you feels right"
+];
 
-  document.getElementById("thankYou").style.display = "block";
-  document.getElementById("openBtn").style.display = "inline-block";
-}
+let rIndex=0;
 
-function showLetter(){
-  document.getElementById("openBtn").style.display = "none";
-  document.getElementById("letterBox").style.display = "block";
+function startBalloons(){
+  goTo('s6');
+  for(let i=0;i<6;i++){
+    let b=document.createElement('div');
+    b.className="balloon";
+    b.style.left=Math.random()*80+"vw";
+    b.onclick=()=>{
+      if(rIndex<reasons.length){
+        document.getElementById('reasonBox').innerText = reasons[rIndex];
+        rIndex++;
+        if(rIndex===reasons.length){
+          setTimeout(()=>{
+            document.getElementById('finalPopup').style.display="flex";
+          },10000);
+        }
+      }
+      b.remove();
+    };
+    document.body.appendChild(b);
+  }
 }
 </script>
 
